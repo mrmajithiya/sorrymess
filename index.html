@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cuddle Quest 💖</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --pink: #f9a8c9;
+      --rose: #f472b6;
+      --lavender: #c4b5fd;
+      --peach: #fcd5b8;
+      --cream: #fff9fb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(160deg, #ffe4f0 0%, #f3e8ff 50%, #e0f0ff 100%);
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      touch-action: manipulation;
+    }
+
+    /* ── Fonts ─────────────────── */
+    .font-love {
+      font-family: 'Dancing Script', cursive;
+    }
+
+    .font-serif-love {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .font-soft {
+      font-family: 'Nunito', sans-serif;
+    }
+
+    /* ── Floating Hearts ────────── */
+    .floating-heart {
+      position: fixed;
+      bottom: -5%;
+      pointer-events: none;
+      z-index: 5;
+      animation: floatUp linear forwards;
+      will-change: transform, opacity;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 0.85;
+      }
+
+      80% {
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateY(-110vh) scale(0.6) rotate(25deg);
+        opacity: 0;
+      }
+    }
+
+    /* ── Pages ──────────────────── */
+    .page {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ── Chibi Characters ─────── */
+    /* Mochi bunny — Page 1 & 4 */
+    .mochi-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* ── Buttons ─────────────── */
+    .btn-love {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #f472b6, #e879a0);
+      color: white;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding: 14px 36px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(244, 114, 182, 0.45);
+      transition: transform 0.18s, box-shadow 0.18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-love:active {
+      transform: scale(0.93);
+      box-shadow: 0 4px 12px rgba(244, 114, 182, 0.3);
+    }
+
+    .btn-lavender {
+      background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+      box-shadow: 0 8px 24px rgba(167, 139, 250, 0.45);
+    }
+
+    /* ── Card ──────────────────── */
+    .card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      border: 2px solid rgba(255, 182, 215, 0.4);
+      box-shadow: 0 16px 48px rgba(244, 114, 182, 0.18);
+      width: 100%;
+      max-width: 380px;
+      padding: 28px 22px;
+    }
+
+    /* ── Progress ──────────────── */
+    .progress-track {
+      width: 100%;
+      height: 22px;
+      background: #ffe4f0;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 2px solid #fbb6d4;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f9a8c9, #f472b6, #e879a0);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
+      transition: width 0.12s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      to {
+        left: 150%;
+      }
+    }
+
+    /* ── Heart Box ─────────────── */
+    .heart-box {
+      cursor: pointer;
+      border-radius: 24px;
+      border: 2.5px solid rgba(244, 114, 182, 0.35);
+      background: linear-gradient(135deg, #fff0f7, #fce7f3);
+      padding: 20px 14px;
+      text-align: center;
+      box-shadow: 0 6px 22px rgba(244, 114, 182, 0.18);
+      transition: transform 0.2s, box-shadow 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 130px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .heart-box:active {
+      transform: scale(0.95);
+    }
+
+    /* ── Letter box ────────────── */
+    .letter-closed {
+      border-radius: 28px;
+      background: linear-gradient(135deg, #ffe4f0, #fce7f3);
+      border: 3px solid #fbb6d4;
+      padding: 40px 24px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 12px 40px rgba(244, 114, 182, 0.25);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ── Warning badge ─────────── */
+    .warning-badge {
+      background: linear-gradient(135deg, #fff7ed, #fef3c7);
+      border: 2px solid #fbbf24;
+      border-radius: 20px;
+      padding: 14px 20px;
+      animation: wobble 0.6s ease;
+    }
+
+    @keyframes wobble {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-6px) rotate(-1deg);
+      }
+
+      75% {
+        transform: translateX(6px) rotate(1deg);
+      }
+    }
+
+    /* ── Cute bounce ─────────── */
+    @keyframes cuddle-bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    .cuddle-bounce {
+      animation: cuddle-bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes wave-arm {
+
+      0%,
+      100% {
+        transform: rotate(-15deg);
+      }
+
+      50% {
+        transform: rotate(25deg);
+      }
+    }
+
+    .wave-arm {
+      animation: wave-arm 1s ease-in-out infinite;
+      transform-origin: bottom left;
+    }
+
+    /* ── Sparkle ─────────────── */
+    @keyframes sparkle {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.6) rotate(180deg);
+      }
+    }
+
+    .sparkle {
+      animation: sparkle 2s ease-in-out infinite;
+    }
+
+    /* ── Page dots ─────────────── */
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #fbb6d4;
+      transition: all 0.3s;
+    }
+
+    .dot.active {
+      width: 22px;
+      background: #f472b6;
+    }
+
+    /* ── Scroll container ───────── */
+    .scroll-text {
+      max-height: 45vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      padding-right: 4px;
+    }
+
+    .scroll-text::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .scroll-text::-webkit-scrollbar-track {
+      background: #ffe4f0;
+      border-radius: 4px;
+    }
+
+    .scroll-text::-webkit-scrollbar-thumb {
+      background: #f472b6;
+      border-radius: 4px;
+    }
+
+    /* ── SVG Chibi ─────────────── */
+    .chibi-char {
+      filter: drop-shadow(0 8px 16px rgba(244, 114, 182, 0.35));
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="root"></div>
+
+  <script>
+    // ─── Sound ─────────────────────────────────────────────────────────────────
+    const playPop = () => {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(660, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
+        osc.start(); osc.stop(ctx.currentTime + 0.25);
+        if (ctx.state === 'suspended') ctx.resume();
+      } catch (e) { }
+    };
+
+    // ─── Floating Hearts ────────────────────────────────────────────────────────
+    const startFloatingHearts = () => {
+      const emojis = ['🩷', '💖', '💗', '💓', '🌸', '✨', '💕', '🌷', '💘', '🥰', '💝', '🫧'];
+      setInterval(() => {
+        const el = document.createElement('div');
+        el.className = 'floating-heart';
+        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        el.style.left = (Math.random() * 100) + '%';
+        el.style.fontSize = (Math.random() * 16 + 12) + 'px';
+        el.style.animationDuration = (Math.random() * 5 + 6) + 's';
+        el.style.opacity = (Math.random() * 0.5 + 0.3);
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 11000);
+      }, 900);
+    };
+
+    // ─── SVG: Mochi Bunny (Page 1) ──────────────────────────────────────────────
+    function MochiBunny() {
+      return `
+<svg viewBox="0 0 160 200" width="160" height="200" xmlns="http://www.w3.org/2000/svg" class="chibi-char cuddle-bounce">
+  <!-- glow bg -->
+  <ellipse cx="80" cy="170" rx="55" ry="18" fill="rgba(244,114,182,0.18)"/>
+  <!-- body -->
+  <ellipse cx="80" cy="148" rx="42" ry="38" fill="#f5f5f5"/>
+  <!-- left arm -->
+  <ellipse cx="42" cy="148" rx="14" ry="10" fill="#f0f0f0" transform="rotate(-20 42 148)"/>
+  <!-- right arm wave -->
+  <g class="wave-arm" style="transform-origin:110px 135px">
+    <ellipse cx="122" cy="138" rx="14" ry="10" fill="#f0f0f0" transform="rotate(30 122 138)"/>
+    <text x="130" y="122" font-size="18" text-anchor="middle">👋</text>
+  </g>
+  <!-- legs -->
+  <ellipse cx="62" cy="180" rx="16" ry="10" fill="#f0f0f0"/>
+  <ellipse cx="98" cy="180" rx="16" ry="10" fill="#f0f0f0"/>
+  <!-- head -->
+  <circle cx="80" cy="95" r="52" fill="#f9f9f9"/>
+  <!-- ears -->
+  <ellipse cx="48" cy="45" rx="14" ry="28" fill="#f0f0f0"/>
+  <ellipse cx="48" cy="45" rx="7"  ry="20" fill="#ffc0d0"/>
+  <ellipse cx="112" cy="45" rx="14" ry="28" fill="#f0f0f0"/>
+  <ellipse cx="112" cy="45" rx="7"  ry="20" fill="#ffc0d0"/>
+  <!-- face -->
+  <circle cx="80" cy="95" r="46" fill="white"/>
+  <!-- eyes -->
+  <ellipse cx="65" cy="90" rx="9" ry="10" fill="#2d1b0e"/>
+  <ellipse cx="95" cy="90" rx="9" ry="10" fill="#2d1b0e"/>
+  <!-- eye shine -->
+  <circle cx="69" cy="86" r="3.5" fill="white"/>
+  <circle cx="99" cy="86" r="3.5" fill="white"/>
+  <!-- heart nose -->
+  <text x="80" y="107" font-size="12" text-anchor="middle">🩷</text>
+  <!-- blush -->
+  <ellipse cx="54" cy="106" rx="11" ry="7" fill="#f9a8c9" opacity="0.55"/>
+  <ellipse cx="106" cy="106" rx="11" ry="7" fill="#f9a8c9" opacity="0.55"/>
+  <!-- smile -->
+  <path d="M68 114 Q80 124 92 114" stroke="#f472b6" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- tiny heart on body -->
+  <text x="80" y="158" font-size="16" text-anchor="middle">💖</text>
+</svg>`;
+    }
+
+    // ─── SVG: Peach Cat (Page 4) ────────────────────────────────────────────────
+    function PeachCat(crying = true) {
+      return `
+<svg viewBox="0 0 160 200" width="150" height="190" xmlns="http://www.w3.org/2000/svg" class="chibi-char cuddle-bounce">
+  <ellipse cx="80" cy="172" rx="50" ry="16" fill="rgba(244,114,182,0.15)"/>
+  <!-- body -->
+  <ellipse cx="80" cy="150" rx="40" ry="36" fill="#fde8d8"/>
+  <!-- arms down (sad) -->
+  <ellipse cx="44" cy="155" rx="13" ry="9" fill="#fdd5bc" transform="rotate(15 44 155)"/>
+  <ellipse cx="116" cy="155" rx="13" ry="9" fill="#fdd5bc" transform="rotate(-15 116 155)"/>
+  <!-- legs -->
+  <ellipse cx="64" cy="178" rx="15" ry="10" fill="#fdd5bc"/>
+  <ellipse cx="96" cy="178" rx="15" ry="10" fill="#fdd5bc"/>
+  <!-- tail -->
+  <path d="M118 162 Q148 145 136 120" stroke="#fdd5bc" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <!-- head -->
+  <ellipse cx="80" cy="92" rx="50" ry="48" fill="#fde8d8"/>
+  <!-- cat ears -->
+  <polygon points="36,58 28,30 54,46" fill="#fdd5bc"/>
+  <polygon points="39,57 34,38 52,48" fill="#f9a8c9"/>
+  <polygon points="124,58 132,30 106,46" fill="#fdd5bc"/>
+  <polygon points="121,57 126,38 108,48" fill="#f9a8c9"/>
+  <!-- face base -->
+  <ellipse cx="80" cy="92" rx="44" ry="42" fill="#fdebd8"/>
+  <!-- sad eyes -->
+  <path d="M60 83 Q67 76 74 83" stroke="#4a2c0a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M86 83 Q93 76 100 83" stroke="#4a2c0a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  ${crying ? `
+  <!-- tears -->
+  <ellipse cx="63" cy="92" rx="3" ry="7" fill="#90d5f0" opacity="0.85">
+    <animate attributeName="cy" values="92;110;92" dur="1.4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.85;0;0.85" dur="1.4s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="97" cy="92" rx="3" ry="7" fill="#90d5f0" opacity="0.85">
+    <animate attributeName="cy" values="92;110;92" dur="1.4s" begin="0.7s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.85;0;0.85" dur="1.4s" begin="0.7s" repeatCount="indefinite"/>
+  </ellipse>` : ''}
+  <!-- nose -->
+  <ellipse cx="80" cy="99" rx="5" ry="3.5" fill="#f9a8c9"/>
+  <!-- sad mouth -->
+  <path d="M70 110 Q80 104 90 110" stroke="#c97c8e" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- whiskers -->
+  <line x1="30" y1="98" x2="60" y2="102" stroke="#ccc" stroke-width="1.2" opacity="0.7"/>
+  <line x1="30" y1="104" x2="60" y2="105" stroke="#ccc" stroke-width="1.2" opacity="0.7"/>
+  <line x1="100" y1="102" x2="130" y2="98" stroke="#ccc" stroke-width="1.2" opacity="0.7"/>
+  <line x1="100" y1="105" x2="130" y2="104" stroke="#ccc" stroke-width="1.2" opacity="0.7"/>
+  <!-- blush -->
+  <ellipse cx="54" cy="108" rx="12" ry="7" fill="#f9a8c9" opacity="0.5"/>
+  <ellipse cx="106" cy="108" rx="12" ry="7" fill="#f9a8c9" opacity="0.5"/>
+  <!-- bow -->
+  <path d="M68 140 Q80 133 92 140 Q80 147 68 140Z" fill="#f472b6"/>
+  <circle cx="80" cy="140" r="5" fill="#e11d8a"/>
+  <!-- paws holding -->
+  <text x="80" y="168" font-size="14" text-anchor="middle">🍵</text>
+</svg>`;
+    }
+
+    // ─── SVG: Happy Mochi (Page 2) ──────────────────────────────────────────────
+    function HappyMochi() {
+      return `
+<svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg" class="chibi-char sparkle">
+  <circle cx="60" cy="60" r="52" fill="white" opacity="0.9"/>
+  <ellipse cx="44" cy="50" rx="8" ry="9" fill="#1a0a00"/>
+  <ellipse cx="76" cy="50" rx="8" ry="9" fill="#1a0a00"/>
+  <circle cx="47" cy="47" r="3" fill="white"/>
+  <circle cx="79" cy="47" r="3" fill="white"/>
+  <text x="60" y="68" font-size="12" text-anchor="middle">🩷</text>
+  <ellipse cx="34" cy="66" rx="10" ry="7" fill="#f9a8c9" opacity="0.6"/>
+  <ellipse cx="86" cy="66" rx="10" ry="7" fill="#f9a8c9" opacity="0.6"/>
+  <path d="M45 76 Q60 88 75 76" stroke="#f472b6" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="24" cy="28" rx="10" ry="18" fill="#f0f0f0"/>
+  <ellipse cx="96" cy="28" rx="10" ry="18" fill="#f0f0f0"/>
+</svg>`;
+    }
+
+    // ─── SVG: Cat Boxes (Page 3) ────────────────────────────────────────────────
+    function CatFace(idx) {
+      const colors = [['#fde8d8', '#f9a8c9'], ['#e8d8fd', '#c4b5fd'], ['#d8f0fd', '#93c5fd']];
+      const [body, blush] = colors[idx % 3];
+      return `
+<svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="50" cy="55" rx="38" ry="36" fill="${body}"/>
+  <polygon points="18,40 10,15 34,32" fill="${body}"/>
+  <polygon points="82,40 90,15 66,32" fill="${body}"/>
+  <ellipse cx="50" cy="54" rx="33" ry="30" fill="${body}" opacity="0.6"/>
+  <ellipse cx="36" cy="48" rx="6" ry="7" fill="#2d1b0e"/>
+  <ellipse cx="64" cy="48" rx="6" ry="7" fill="#2d1b0e"/>
+  <circle cx="38" cy="46" r="2.5" fill="white"/>
+  <circle cx="66" cy="46" r="2.5" fill="white"/>
+  <ellipse cx="50" cy="58" rx="4" ry="3" fill="${blush}"/>
+  <path d="M42 66 Q50 73 58 66" stroke="#d97706" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="32" cy="60" rx="8" ry="5" fill="${blush}" opacity="0.5"/>
+  <ellipse cx="68" cy="60" rx="8" ry="5" fill="${blush}" opacity="0.5"/>
+</svg>`;
+    }
+
+    // ─── State ──────────────────────────────────────────────────────────────────
+    let currentPage = 1;
+
+    function setPage(n) {
+      currentPage = n;
+      render();
+      window.scrollTo(0, 0);
+    }
+
+    // ─── Page 1 ─────────────────────────────────────────────────────────────────
+    function renderPage1() {
+      return `
+<div class="page">
+  <div style="position:absolute;top:16px;left:50%;transform:translateX(-50%)" class="text-2xl sparkle">🌸 ✨ 🌸</div>
+
+  <div class="mochi-wrap mb-2">
+    ${MochiBunny()}
+  </div>
+
+  <h1 class="font-love text-center mt-2 mb-1" style="font-size:2.6rem;color:#e11d8a;line-height:1.2">
+    Heyy Princess 💖
+  </h1>
+
+  <p class="font-serif-love text-center mb-3" style="color:#be185d;font-size:1.05rem;font-style:italic">
+    "something precious is waiting for you…"
+  </p>
+
+  <div class="flex gap-3 text-2xl mb-8" style="flex-wrap:wrap;justify-content:center">
+    🌷 🫧 🩷 🐰 🍓 ✨ 🌸 🥐
+  </div>
+
+  <button class="btn-love" onclick="playPop(); setPage(2);">
+    Let's Check 😍
+  </button>
+
+  <div class="flex gap-2 mt-10" id="dots"></div>
+</div>`;
+    }
+
+    // ─── Page 2 ─────────────────────────────────────────────────────────────────
+    let p2percent = 0;
+    let p2timer = null;
+
+    function renderPage2() {
+      return `
+<div class="page">
+  <div style="text-align:center;margin-bottom:10px" class="sparkle">${HappyMochi()}</div>
+
+  <h2 class="font-love text-center mb-1" style="font-size:2rem;color:#7c3aed">
+    Measuring your cuteness ⏳
+  </h2>
+  <p class="font-soft text-center mb-6" style="color:#a855f7;font-size:0.9rem">
+    please wait while we calculate…
+  </p>
+
+  <div class="card">
+    <div class="progress-track mb-2">
+      <div class="progress-fill" id="pfill" style="width:${p2percent}%">
+        ${p2percent > 15 ? p2percent + '%' : ''}
+      </div>
+    </div>
+
+    <p class="font-love text-center mt-2" id="pct-text" style="font-size:2.2rem;color:#e11d8a">${p2percent}%</p>
+    <p class="font-soft text-center text-sm mt-1" style="color:#f472b6">${p2percent < 120 ? 'calculating cuteness 🍬…' : 'measurement complete! 🎉'}</p>
+
+    <div id="warning-area" style="${p2percent >= 120 ? '' : 'display:none'}" class="mt-4">
+      <div class="warning-badge text-center mb-4">
+        <p class="font-love" style="font-size:1.5rem;color:#d97706">⚠️ Too cute to handle!</p>
+      </div>
+      <div style="text-align:center">
+        <button class="btn-love btn-lavender" onclick="playPop(); p2percent=0; setPage(3);">Continue 💕</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-2 mt-8" id="dots"></div>
+</div>`;
+    }
+
+    function startP2() {
+      if (p2timer) clearInterval(p2timer);
+      if (p2percent >= 120) return;
+      p2timer = setInterval(() => {
+        p2percent = Math.min(120, p2percent + Math.floor(Math.random() * 4 + 2));
+        const fill = document.getElementById('pfill');
+        const pctT = document.getElementById('pct-text');
+        const warn = document.getElementById('warning-area');
+        if (fill) {
+          fill.style.width = p2percent + '%';
+          fill.textContent = p2percent > 15 ? p2percent + '%' : '';
+        }
+        if (pctT) pctT.textContent = p2percent + '%';
+        if (p2percent >= 120) {
+          clearInterval(p2timer);
+          if (warn) { warn.style.display = ''; void warn.offsetWidth; warn.style.animation = 'wobble 0.6s ease'; }
+        }
+      }, 100);
+    }
+
+    // ─── Page 3 ─────────────────────────────────────────────────────────────────
+    const messages = [
+      { title: "💌 For You", text: "thank you meri sb se achi friend bnne k liye or abhi tk mere sath rehne k liye❤️🧿" },
+      { title: "🐱 Silly Truth", text: "jb aap baat ny krte or ignore krte ho vo sb se bda dar he mere liye" },
+      { title: "🌙 At Night", text: "aap hi ek person ho jisko din khtm hote sb Btane ka man krta he or baat kr k hi nind aati he ❤️😅" }
+    ];
+    let opened = [false, false, false];
+
+    function toggleBox(i) {
+      playPop();
+      opened[i] = !opened[i];
+      const box = document.getElementById('hbox-' + i);
+      if (box) {
+        box.style.transform = 'scale(0.92)';
+        setTimeout(() => { box.style.transform = ''; renderBoxContent(i); }, 150);
+      }
+    }
+
+    function renderBoxContent(i) {
+      const box = document.getElementById('hbox-' + i);
+      if (!box) return;
+      if (opened[i]) {
+        box.innerHTML = `
+      <div class="text-center">
+        ${CatFace(i)}
+        <p class="font-love mt-2 mb-1" style="color:#e11d8a;font-size:1.1rem">${messages[i].title}</p>
+        <p class="font-soft text-xs leading-relaxed" style="color:#6d1c3f">${messages[i].text}</p>
+      </div>`;
+      } else {
+        box.innerHTML = `
+      <div class="text-4xl mb-2">💌</div>
+      <p class="font-love" style="color:#be185d;font-size:1rem">tap to reveal</p>
+      <p class="font-soft text-xs mt-1" style="color:#f9a8c9">🔒 secret inside</p>`;
+      }
+    }
+
+    function renderPage3() {
+      return `
+<div class="page" style="justify-content:flex-start;padding-top:40px;padding-bottom:80px">
+  <div class="text-4xl text-center mb-1 sparkle">💌</div>
+  <h2 class="font-love text-center mb-1" style="font-size:2rem;color:#c2185b">Tap each one to reveal 💌</h2>
+  <p class="font-soft text-center text-sm mb-7" style="color:#f472b6">three little secrets just for you 🌸</p>
+
+  <div style="display:flex;flex-direction:column;gap:14px;width:100%;max-width:360px;margin:0 auto">
+    ${[0, 1, 2].map(i => `
+      <div class="heart-box" id="hbox-${i}" onclick="toggleBox(${i})">
+        <div class="text-4xl mb-2">💌</div>
+        <p class="font-love" style="color:#be185d;font-size:1rem">tap to reveal</p>
+        <p class="font-soft text-xs mt-1" style="color:#f9a8c9">🔒 secret inside</p>
+      </div>
+    `).join('')}
+  </div>
+
+  <div style="text-align:center;margin-top:28px">
+    <button class="btn-love" onclick="playPop(); opened=[false,false,false]; setPage(4);">See More 💖</button>
+  </div>
+
+  <div class="flex gap-2 mt-8" id="dots"></div>
+</div>`;
+    }
+
+    // ─── Page 4 ─────────────────────────────────────────────────────────────────
+    let letterOpen = false;
+
+    const apology = [
+      "I am sorry",
+      "Mene Aaj tk jitni galtiya kri he or last me jo galti huy he uske liye dil se sorry❤️",
+      "Me promise krta hu aage se esi kuch galtiya hogi ny aapko khush rkhunga na hi hurt krunga",
+      "Aap meri prayer ki pehli wish ho or har prayer me pehli aapki health or wealth mangta acha lagta he muje ❤️",
+      "I am sorry jb apne bich thoda issue huva tb aapko Jo problem aay usme me aapke sath ny reh ska 🥺",
+      "Aapke sath ka har din muje kafi comfortable lagta he",
+      "Bhagwan na kre aapki life me koi problem aaye bt kbhi aaye to vo har ek problem me me aapke sath reh sku or aapko support kr sku",
+      "Kbhi gusse me ya kuch galat ulta sidha aapko bura lage esa word nikal gaya ho ye 1 year me to uske liye b muje maaf kr dena",
+      "Me aapke liye ese 1000 surprise bna skta hu aapko khush rkhne k liye ❤️😁",
+      "Aap meri comfort place comfort zone meri har comfort aadat ho❤️",
+      "Kbhi aapka mood na ho to faltu k joke suna k aapko Bina baat k hasana acha lagta he kbhi lagta he aapko me pagal na lagu 😅",
+      "Kbhi koi topic na ho baat krne k liye fir b aapke sath hi baat krna acha lagta he",
+      "Bhagwan aapki har vo wish puri kre jo unhone aapke liye likha he ❤️",
+      "Aapke sb dreams pure ho jo b ho ❤️",
+      "Or aap hamesha ese khush raho haste raho  🧿"
+    ];
+
+    function renderPage4() {
+      return `
+<div class="page" style="justify-content:flex-start;padding-top:36px;padding-bottom:80px">
+  <div class="text-3xl text-center mb-1 sparkle">💌</div>
+  <h2 class="font-love text-center mb-6" style="font-size:2rem;color:#c2185b">A little note for you 💖</h2>
+
+  <div style="width:100%;max-width:380px;margin:0 auto">
+    ${!letterOpen ? `
+      <div class="letter-closed" onclick="playPop(); letterOpen=true; render();">
+        <div class="text-6xl cuddle-bounce">💝</div>
+        <p class="font-love mt-4 mb-1" style="font-size:1.8rem;color:#e11d8a">❤️ Tap to open</p>
+        <p class="font-soft text-sm" style="color:#f9a8c9">a heartfelt surprise waits inside 💌</p>
+      </div>
+    ` : `
+      <div style="background:rgba(255,255,255,0.8);backdrop-filter:blur(14px);border-radius:28px;border:2.5px solid #fbb6d4;padding:24px 18px;box-shadow:0 16px 48px rgba(244,114,182,0.2)">
+        <div style="text-align:center;margin-bottom:16px ;item-align:center;justify-content:center;display:flex;flex-direction:column">
+          ${PeachCat(true)}
+          <p class="font-love mt-2" style="color:#e11d8a;font-size:1.2rem">I'm so sorry & I love you 🥺</p>
+        </div>
+        <div class="scroll-text">
+          ${apology.map(line => `
+            <div style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #ffe4f0">
+              <span style="flex-shrink:0;margin-top:2px">💗</span>
+              <p class="font-soft" style="font-size:0.82rem;line-height:1.55;color:#6d1c3f">${line}</p>
+            </div>
+          `).join('')}
+        </div>
+        <div class="text-center mt-4" style="font-size:1.6rem">💝 🌸 ✨ 💖 🌷</div>
+        <p class="font-love text-center mt-2" style="color:#be185d;font-size:1.1rem">forever yours 🌹</p>
+      </div>
+      <div style="text-align:center;margin-top:20px">
+        <p class="font-serif-love text-center mb-3" style="color:#f472b6;font-style:italic;font-size:0.9rem">✨ hope you loved this journey ✨</p>
+        <button class="btn-love btn-lavender" style="font-size:1rem;padding:10px 26px" onclick="letterOpen=false;p2percent=0;opened=[false,false,false];setPage(1);">
+          restart magic 🌈
+        </button>
+      </div>
+    `}
+  </div>
+
+  <div class="flex gap-2 mt-8" id="dots"></div>
+</div>`;
+    }
+
+    // ─── Dots ────────────────────────────────────────────────────────────────────
+    function renderDots() {
+      const container = document.getElementById('dots');
+      if (!container) return;
+      container.innerHTML = [1, 2, 3, 4].map(p => `
+    <div class="dot${currentPage === p ? ' active' : ''}" onclick="if(${p}!==currentPage){playPop();setPage(${p})}" style="cursor:pointer"></div>
+  `).join('');
+    }
+
+    // ─── Master Render ────────────────────────────────────────────────────────────
+    function render() {
+      const root = document.getElementById('root');
+      if (currentPage === 1) root.innerHTML = renderPage1();
+      else if (currentPage === 2) { root.innerHTML = renderPage2(); startP2(); }
+      else if (currentPage === 3) { root.innerHTML = renderPage3(); }
+      else if (currentPage === 4) root.innerHTML = renderPage4();
+      renderDots();
+    }
+
+    window.onload = () => {
+      startFloatingHearts();
+      render();
+    };
+  </script>
+</body>
+
+</html>
